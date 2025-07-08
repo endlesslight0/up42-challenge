@@ -39,15 +39,23 @@ cd up42-challenge
 
 ### 2. Configure Variables
 
-Edit `terraform/variables.tf` or create a `terraform.tfvars` file:
+The following table lists all accepted input variables for the Terraform configuration:
 
-```hcl
-namespace = "s3www"
-environment = "development"
-minio_access_key = "admin"
-giphy_link = "https://media.giphy.com/media/example/giphy.gif"
-host_arch = "amd64"  # or "arm64" for Apple Silicon
-```
+| Variable | Type | Default | Description |
+|----------|------|---------|-------------|
+| `namespace` | `string` | `"s3www"` | Kubernetes namespace for the deployment |
+| `environment` | `string` | `"dev"` | Environment name (dev, staging, prod) |
+| `kubeconfig_path` | `string` | `"~/.kube/config"` | Path to kubeconfig file |
+| `kubeconfig_context` | `string` | `""` | Kubernetes context to use |
+| `s3www_replicas` | `number` | `1` | Number of s3www replicas |
+| `s3www_image_tag` | `string` | `"v0.9.0"` | Docker image tag for s3www |
+| `uploader_job_image` | `string` | `"alpine:3.22"` | Docker image used for file_upload Kubernetes Job |
+| `ingress_host` | `string` | `"s3www.local"` | Hostname for ingress |
+| `minio_chart_version` | `string` | `"5.4.0"` | Official MinIO helm chart version |
+| `minio_access_key` | `string` | `"minioadmin"` | MinIO access key |
+| `giphy_link` | `string` | `"https://media.giphy.com/media/VdiQKDAguhDSi37gn1/giphy.gif"` | Link to gif file from giphy.com |
+| `host_arch` | `string` | `"arm64"` | Host CPU architecture |
+
 
 ### 3. Deploy the Infrastructure
 
@@ -181,18 +189,6 @@ The upload script performs the following operations:
 - **Multi-file Upload**: Handles both HTML and media files
 - **Responsive Design**: Generated HTML works on various screen sizes
 
-#### Environment Variables
-
-The script uses the following environment variables:
-
-| Variable | Purpose | Example |
-|----------|---------|---------|
-| `MINIO_ENDPOINT` | MinIO service URL | `http://minio.s3www.svc.cluster.local:9000` |
-| `MINIO_ACCESS_KEY` | MinIO access credentials | `admin` |
-| `MINIO_SECRET_KEY` | MinIO secret credentials | `generated-password` |
-| `GIPHY_LINK` | URL of GIF file to download | `https://media.giphy.com/media/example/giphy.gif` |
-| `HOST_ARCH` | Target architecture | `amd64` or `arm64` |
-
 #### Job Configuration
 
 The Kubernetes Job is configured in Terraform:
@@ -306,15 +302,17 @@ The deployment follows this order:
 
 ## Configuration Options
 
-### Environment Variables
+### Terraform Variables
 
-| Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
-| `namespace` | Kubernetes namespace | `s3www` | Yes |
-| `environment` | Environment label | `development` | Yes |
-| `minio_access_key` | MinIO access key | `minioadmin` | Yes |
-| `giphy_link` | URL of file to upload | `https://media.giphy.com/media/VdiQKDAguhDSi37gn1/giphy.gif` | Yes |
-| `host_arch` | Host architecture | `arm64` | Yes |
+Edit `terraform/variables.tf` or create a `terraform.tfvars` file:
+
+```hcl
+namespace = "s3www"
+environment = "development"
+minio_access_key = "admin"
+giphy_link = "https://media.giphy.com/media/example/giphy.gif"
+host_arch = "amd64"  # or "arm64" for Apple Silicon
+```
 
 ### Helm Values Customization
 
