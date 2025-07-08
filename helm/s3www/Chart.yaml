@@ -1,0 +1,21 @@
+apiVersion: v2
+name: s3www
+description: S3-compatible web server
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+home: https://github.com/endlesslight0/up42-challenge
+sources:
+  - https://github.com/endlesslight0/up42-challenge
+maintainers:
+  - name: Nicolae Istratii
+    email: yalokiy@gmail.com
+keywords:
+  - s3www
+  - minio
+  - object-storage
+  - kubernetes
+  - go
+annotations:
+  category: Infrastructure
+  licenses: The Unlicense

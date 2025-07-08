@@ -1,0 +1,25 @@
+service:
+  type: ClusterIP
+  port: 9000
+
+existingSecret: ${existingSecret}
+
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 100m
+  limits:
+    memory: 512Mi
+    cpu: 200m
+
+persistence:
+  enabled: false
+
+mode: standalone
+
+buckets:
+  - name: files
+    policy: public
+    purge: false
+    versioning: false
+    objectlocking: false

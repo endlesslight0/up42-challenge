@@ -1,0 +1,18 @@
+
+image:
+  tag: ${s3www_tag}
+
+config:
+  bucket: files
+  endpoint: http://minio:9000
+  address: 0.0.0.0:8080
+  accessKey: ${accessKey}
+  secretKey: ${secretKey}
+
+monitoring:
+  enabled: false
+  serviceMonitor:
+    enabled: false
+    interval: 30s
+    path: /metrics
+    port: http
